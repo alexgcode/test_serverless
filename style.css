@@ -1,0 +1,51 @@
+.hero {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a4da3 100%);
+    min-height: 75vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .hero-overlay {
+        display: block;
+    }
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.hover-shadow {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+.rounded-4 {
+    border-radius: 1rem;
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+}
+
+.form-control:focus {
+    background-color: #212529;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
