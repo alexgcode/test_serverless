@@ -1,4 +1,16 @@
 
+const loader = document.querySelector("#loader");
+
+// Función para mostrar y ocultar el loader
+function toggleLoader(show) {
+    if (show) {
+        loader.style.display = "block"; // Muestra el loader
+    } else {
+        loader.style.display = "none"; // Oculta el loader
+    }
+}
+
+
 // Form validation
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.needs-validation');
@@ -18,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form.needs-validation");
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
       event.preventDefault(); // Prevenir el envío por defecto del formulario
 
       // Capturar valores de los campos
@@ -39,14 +51,30 @@ document.addEventListener("DOMContentLoaded", () => {
           message: messageContent,
       };
 
-      // Llamar a la función sendMessage
-      sendMessage(message);
+      try {
+        // Mostrar loader antes de la solicitud
+        toggleLoader(true);
 
-      // Opcional: Reiniciar el formulario después del envío
-      form.reset();
+        // Llamar a la función sendMessage
+        let res = await sendMessage(message);
 
-      // Mostrar mensaje de éxito
-      alert("Mensaje enviado con éxito.");
+        // Manejar la respuesta
+        if (!res.error) {
+            alert("Mensaje enviado con éxito.");
+        } else {
+            alert("Hubo un error: " + res.error);
+        }
+    } catch (error) {
+        console.error("Error durante el envío del mensaje:", error);
+        alert("Hubo un problema al procesar la solicitud.");
+    } finally {
+        // Ocultar loader después de la solicitud
+        toggleLoader(false);
+
+        // Opcional: Reiniciar el formulario después del envío
+        form.reset();
+    }
+      
   });
 });
 
