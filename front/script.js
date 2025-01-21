@@ -14,37 +14,65 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-const getRandomDadJoke = async () => {
-    /*
-    const url = "https://icanhazdadjoke.com/";
-    try {
-        const jokeStream = await fetch(url, {
-          headers: {
-            Accept: "application/json"
-          }
-        });
-        const jsonJoke = await jokeStream.json();
-        console.log(JSON.stringify(jsonJoke));
-      } catch (err) {
-        console.log(err.stack );
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form.needs-validation");
+
+  form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevenir el envío por defecto del formulario
+
+      // Capturar valores de los campos
+      const name = form.querySelector("input[placeholder='Nombre']").value.trim();
+      const email = form.querySelector("input[placeholder='Email']").value.trim();
+      const messageContent = form.querySelector("textarea[placeholder='Mensaje']").value.trim();
+
+      // Validar campos
+      if (!name || !email || !messageContent) {
+          alert("Por favor, completa todos los campos.");
+          return;
       }
-    */
 
+      // Crear objeto mensaje
+      const message = {
+          name,
+          email,
+          message: messageContent,
+      };
+
+      // Llamar a la función sendMessage
+      sendMessage(message);
+
+      // Opcional: Reiniciar el formulario después del envío
+      form.reset();
+
+      // Mostrar mensaje de éxito
+      alert("Mensaje enviado con éxito.");
+  });
+});
+
+
+const sendMessage = async (message) => {
+
+    try {
+      const data = message;//{ "joke": "This is a test joke" };
+      const url = "/.netlify/functions/jokes";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      return result;
+
+    } catch (error) {
+      console.error(error);
+      throw new Error("Error en la solicitud: " + response.statusText);
+    }
     
-    const url = "/.netlify/functions/jokes";
-    const jokeStream = await fetch(url);
-    //const jsonJoke = await jokeStream.json();
     
-    const joke = await jokeStream.json();//jsonJoke.joke;
-    return joke;
     
 };
-
-const refreshJoke = async () => {
-    const joke = await getRandomDadJoke();
-    console.log(joke);
-};
-
-refreshJoke();
-
-setInterval(refreshJoke, 10000);
