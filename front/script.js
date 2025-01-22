@@ -28,54 +28,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("form.needs-validation");
+    const form = document.querySelector('.needs-validation');
 
-  form.addEventListener("submit", async (event) => {
-      event.preventDefault(); // Prevenir el envío por defecto del formulario
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevenir el envío por defecto del formulario
 
-      // Capturar valores de los campos
-      const name = form.querySelector("input[placeholder='Nombre']").value.trim();
-      const email = form.querySelector("input[placeholder='Email']").value.trim();
-      const messageContent = form.querySelector("textarea[placeholder='Mensaje']").value.trim();
+        // Capturar valores de los campos
+        const name = form.querySelector("input[placeholder='Nombre']").value.trim();
+        const email = form.querySelector("input[placeholder='Email']").value.trim();
+        const messageContent = form.querySelector("textarea[placeholder='Mensaje']").value.trim();
 
-      // Validar campos
-      if (!name || !email || !messageContent) {
-          alert("Por favor, completa todos los campos.");
-          return;
-      }
-
-      // Crear objeto mensaje
-      const message = {
-          name,
-          email,
-          message: messageContent,
-      };
-
-      try {
-        // Mostrar loader antes de la solicitud
-        toggleLoader(true);
-
-        // Llamar a la función sendMessage
-        let res = await sendMessage(message);
-
-        // Manejar la respuesta
-        if (!res.error) {
-            alert("Mensaje enviado con éxito.");
-        } else {
-            alert("Hubo un error: " + res.error);
+        // Validar campos
+        if (!name || !email || !messageContent) {
+            alert("Por favor, completa todos los campos.");
+            return;
         }
-    } catch (error) {
-        console.error("Error durante el envío del mensaje:", error);
-        alert("Hubo un problema al procesar la solicitud.");
-    } finally {
-        // Ocultar loader después de la solicitud
-        toggleLoader(false);
 
-        // Opcional: Reiniciar el formulario después del envío
-        form.reset();
-    }
-      
-  });
+        // Crear objeto mensaje
+        const message = {
+            name,
+            email,
+            message: messageContent,
+        };
+
+        try {
+            // Mostrar loader antes de la solicitud
+            toggleLoader(true);
+
+            // Llamar a la función sendMessage
+            let res = await sendMessage(message);
+
+            // Manejar la respuesta
+            if (!res.error) {
+                alert("Mensaje enviado con éxito.");
+            } else {
+                alert("Hubo un error: " + res.error);
+            }
+        } catch (error) {
+            console.error("Error durante el envío del mensaje:", error);
+            alert("Hubo un problema al procesar la solicitud.");
+        } finally {
+            // Ocultar loader después de la solicitud
+            toggleLoader(false);
+
+            // Opcional: Reiniciar el formulario después del envío
+            form.reset();
+        }
+        
+    });
 });
 
 
@@ -104,3 +104,58 @@ const sendMessage = async (message) => {
     
     
 };
+
+
+
+//-----------------
+// Initialize AOS
+AOS.init({
+    duration: 800,
+    offset: 100,
+    once: true
+  });
+  
+  // Smooth scroll for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+  
+  // Navbar background on scroll
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+    } else {
+      navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+    }
+  });
+  
+  /*
+  // Form submission animation
+  const form = document.querySelector('.contact-form');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const button = form.querySelector('button');
+
+    //-------------------------
+
+
+    //----------------------
+
+    button.textContent = 'Enviando...';
+    // Simulate form submission
+    setTimeout(() => {
+      button.textContent = '¡Mensaje Enviado!';
+      form.reset();
+      setTimeout(() => {
+        button.textContent = 'Enviar Mensaje';
+      }, 2000);
+    }, 1500);
+  });
+  */

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación - Servicios Informáticos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1d1f21, #323b45);
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        #animation-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+        }
+
+        .icon img {
+            width: 50%;
+        }
+
+        #logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+        }
+
+        #slogan {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-align: center;
+            opacity: 0;
+        }
+
+        #contact-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        #contact-btn:hover {
+            background: #0097a7;
+        }
+    </style>
+</head>
+<body>
+
+<div id="animation-container">
+    <div id="logo">Servicios Informáticos</div>
+    <div id="slogan">Innovamos para hacer crecer tu negocio.</div>
+    <button id="contact-btn">Contactar</button>
+</div>
+
+<script>
+    // GSAP Animation
+    const tl = gsap.timeline({ defaults: { duration: 1, ease: "power2.out" } });
+
+    tl.fromTo("#logo", { y: -50, opacity: 0 }, { y: 0, opacity: 1 })
+      .fromTo("#slogan", { y: 20, opacity: 0 }, { y: 0, opacity: 1 }, "-0.5")
+      .fromTo("#contact-btn", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1 }, "+=0.5");
+</script>
+
+</body>
+</html>
